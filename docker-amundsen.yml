@@ -27,6 +27,9 @@ services:
   amundsenmetadata:
       image: amundsen-metadata:latest
       container_name: amundsenmetadata
+      environment:
+        - NEO4J_HOST=neo4j_amundsen
+        - NEO4J_BOLT_PORT=7687
       depends_on:
         - neo4j
       ports:
@@ -36,6 +39,11 @@ services:
   amundsenfrontend:
       image: amundsen-frontend:latest
       container_name: amundsenfrontend
+      environment:
+        - METADATA_SERVICE_HOST=amundsenmetadata
+        - METADATA_SERVICE_PORT=5002
+        - SEARCH_SERVICE_HOST=amundsensearch
+        - SEARCH_SERVICE_PORT=5001
       depends_on:
         - amundsenmetadata
         - amundsensearch

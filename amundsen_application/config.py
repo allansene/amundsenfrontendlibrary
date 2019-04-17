@@ -1,3 +1,4 @@
+import os
 from typing import Dict, Set  # noqa: F401
 
 
@@ -27,13 +28,20 @@ class LocalConfig(Config):
     # If installing using the Docker bootstrap, this should be modified to the docker host ip.
     LOCAL_HOST = '0.0.0.0'
 
+    SEARCH_SERVICE_PORT = os.environ.get('SEARCH_SERVICE_PORT', '5001')
+    METADATA_SERVICE_PORT = os.environ.get('METADATA_SERVICE_PORT', '5002')
+
+    # If installing using the Docker bootstrap, this should be modified to the docker host ip.
+    SEARCH_SERVICE_HOST = os.environ.get('SEARCH_SERVICE_HOST', '0.0.0.0')
+    METADATA_SERVICE_HOST = os.environ.get('METADATA_SERVICE_HOST', '0.0.0.0')
+
     SEARCHSERVICE_REQUEST_CLIENT = None
     SEARCHSERVICE_REQUEST_HEADERS = None
-    SEARCHSERVICE_BASE = 'http://{LOCAL_HOST}:{PORT}'.format(LOCAL_HOST=LOCAL_HOST, PORT=SEARCH_PORT)
+    SEARCHSERVICE_BASE = 'http://{LOCAL_HOST}:{PORT}'.format(LOCAL_HOST=SEARCH_SERVICE_HOST, PORT=SEARCH_SERVICE_PORT)
 
     METADATASERVICE_REQUEST_CLIENT = None
     METADATASERVICE_REQUEST_HEADERS = None
-    METADATASERVICE_BASE = 'http://{LOCAL_HOST}:{PORT}'.format(LOCAL_HOST=LOCAL_HOST, PORT=METADATA_PORT)
+    METADATASERVICE_BASE = 'http://{LOCAL_HOST}:{PORT}'.format(LOCAL_HOST=METADATA_SERVICE_HOST, PORT=METADATA_SERVICE_PORT)
 
     AUTH_USER_METHOD = None
     GET_PROFILE_URL = None
